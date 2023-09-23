@@ -5,6 +5,8 @@ using UnityEngine;
 public class MovementScript : MonoBehaviour
 {
     public float movementSpeed = 1.0f;
+    public Rigidbody2D rb;
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,6 @@ public class MovementScript : MonoBehaviour
         Vector2 inputVector = new Vector2(horizontalInput, verticalInput);
         Vector2 normalizedInput = inputVector.normalized;
 
-        transform.position = transform.position + new Vector3(normalizedInput.x * movementSpeed, normalizedInput.y * movementSpeed, 0) * Time.deltaTime;
+        rb.MovePosition(rb.position + new Vector2(normalizedInput.x * movementSpeed, normalizedInput.y * movementSpeed) * Time.deltaTime);
     }
 }

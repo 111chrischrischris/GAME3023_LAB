@@ -6,6 +6,7 @@ public class MovementScript : MonoBehaviour
 {
     public float movementSpeed = 1.0f;
     public Rigidbody2D rb;
+    public Animator animator;
 
 
     // Start is called before the first frame update
@@ -17,6 +18,9 @@ public class MovementScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        animator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
+        animator.SetFloat("Vertical", Input.GetAxis("Vertical"));
+
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 

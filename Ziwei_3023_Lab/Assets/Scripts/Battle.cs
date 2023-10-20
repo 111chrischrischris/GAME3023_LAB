@@ -44,7 +44,20 @@ public class Battle : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
-        Debug.Log("It is enemy's turn, but it doesn't do anything");
+        Debug.Log("It is enemy's turn");
+        int randomNumber = Random.Range(1, 4);
+        if (randomNumber == 1)
+        {
+            OnPunch();
+        }
+        else if (randomNumber == 2)
+        {
+            OnKick();
+        }
+        else
+        {
+            OnBlock();
+        }
         yield return new WaitForSeconds(1f);
         state = BattleState.PLAYERTURN;
         PlayerTurn();
@@ -68,6 +81,11 @@ public class Battle : MonoBehaviour
             Debug.Log("Using Punch");
             return;
         }
+        if (state == BattleState.ENEMYTURN)
+        {
+            Debug.Log("Enemy using Punch");
+            return;
+        }
     }
     public void OnKick()
     {
@@ -77,6 +95,11 @@ public class Battle : MonoBehaviour
             Debug.Log("Using Kick");
             return;
         }
+        if (state == BattleState.ENEMYTURN)
+        {
+            Debug.Log("Enemy using Kick");
+            return;
+        }
     }
     public void OnBlock()
     {
@@ -84,6 +107,11 @@ public class Battle : MonoBehaviour
         {
             StartCoroutine(PlayerAttack());
             Debug.Log("Using Block");
+            return;
+        }
+        if (state == BattleState.ENEMYTURN)
+        {
+            Debug.Log("Enemy using Block");
             return;
         }
     }

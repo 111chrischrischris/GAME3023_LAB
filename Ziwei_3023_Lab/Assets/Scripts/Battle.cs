@@ -15,6 +15,10 @@ public class Battle : MonoBehaviour
     public Transform playerBattleStation;
     public Transform enemyBattleStation;
 
+    public Animator musicAnim;
+
+    public float waitTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,7 +73,7 @@ public class Battle : MonoBehaviour
     }
     public void OnFlee()
     {
-        SceneManager.LoadScene("SampleScene");
+        StartCoroutine(ChangeScene());
         Debug.Log("Loaded World Scene");
     }
 
@@ -114,5 +118,12 @@ public class Battle : MonoBehaviour
             Debug.Log("Enemy using Block");
             return;
         }
+    }
+
+    IEnumerator ChangeScene()
+    {
+        musicAnim.SetTrigger("fadeOut");
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene("SampleScene");
     }
 }

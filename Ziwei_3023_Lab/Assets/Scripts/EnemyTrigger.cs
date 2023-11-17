@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,19 +6,24 @@ using UnityEngine.SceneManagement;
 
 public class EnemyTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Animator musicAnim;
+
+    public float waitTime;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
         if (player != null)
         {
-            SceneManager.LoadScene("Battle");
+            StartCoroutine(ChangeScene());
             Debug.Log("Loaded Battle Scene");
         }
+    }
+
+    IEnumerator ChangeScene()
+    {
+        musicAnim.SetTrigger("fadeOut");
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene("Battle");
     }
 }

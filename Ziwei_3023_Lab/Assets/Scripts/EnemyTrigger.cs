@@ -5,10 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class EnemyTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Animator animator;
+
+    private int levelToLoad;
+
+    public void FadeToLevel(int levelIndex)
     {
-        
+        levelToLoad = levelIndex;
+        animator.SetTrigger("FadeOut");
+    }
+
+    public void OnFadeComplete()
+    {
+        SceneManager.LoadScene(levelToLoad);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -16,7 +25,7 @@ public class EnemyTrigger : MonoBehaviour
         Player player = collision.GetComponent<Player>();
         if (player != null)
         {
-            SceneManager.LoadScene("Battle");
+            FadeToLevel(2);
             Debug.Log("Loaded Battle Scene");
         }
     }

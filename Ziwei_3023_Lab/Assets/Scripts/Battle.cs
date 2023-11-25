@@ -15,6 +15,11 @@ public class Battle : MonoBehaviour
     public Transform playerBattleStation;
     public Transform enemyBattleStation;
 
+    public Animator animator;
+
+    private int levelToLoad;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,7 +74,7 @@ public class Battle : MonoBehaviour
     }
     public void OnFlee()
     {
-        SceneManager.LoadScene("SampleScene");
+        FadeToLevel(1);
         Debug.Log("Loaded World Scene");
     }
 
@@ -114,5 +119,16 @@ public class Battle : MonoBehaviour
             Debug.Log("Enemy using Block");
             return;
         }
+    }
+
+    public void FadeToLevel(int levelIndex)
+    {
+        levelToLoad = levelIndex;
+        animator.SetTrigger("FadeOut");
+    }
+
+    public void OnFadeComplete()
+    {
+        SceneManager.LoadScene(levelToLoad);
     }
 }

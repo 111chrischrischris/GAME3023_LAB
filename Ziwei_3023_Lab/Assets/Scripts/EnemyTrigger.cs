@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,24 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class EnemyTrigger : MonoBehaviour
 {
-    public Animator musicAnim;
+    public Animator animator;
 
-    public float waitTime;
+    private int levelToLoad;
+
+    public void FadeToLevel(int levelIndex)
+    {
+        levelToLoad = levelIndex;
+        animator.SetTrigger("FadeOut");
+    }
+
+    public void OnFadeComplete()
+    {
+        SceneManager.LoadScene(levelToLoad);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
         if (player != null)
         {
-            StartCoroutine(ChangeScene());
+            FadeToLevel(2);
             Debug.Log("Loaded Battle Scene");
         }
-    }
-
-    IEnumerator ChangeScene()
-    {
-        musicAnim.SetTrigger("fadeOut");
-        yield return new WaitForSeconds(waitTime);
-        SceneManager.LoadScene("Battle");
     }
 }

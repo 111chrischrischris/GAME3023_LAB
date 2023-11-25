@@ -15,9 +15,10 @@ public class Battle : MonoBehaviour
     public Transform playerBattleStation;
     public Transform enemyBattleStation;
 
-    public Animator musicAnim;
+    public Animator animator;
 
-    public float waitTime;
+    private int levelToLoad;
+
 
     // Start is called before the first frame update
     void Start()
@@ -73,7 +74,7 @@ public class Battle : MonoBehaviour
     }
     public void OnFlee()
     {
-        StartCoroutine(ChangeScene());
+        FadeToLevel(1);
         Debug.Log("Loaded World Scene");
     }
 
@@ -120,10 +121,14 @@ public class Battle : MonoBehaviour
         }
     }
 
-    IEnumerator ChangeScene()
+    public void FadeToLevel(int levelIndex)
     {
-        musicAnim.SetTrigger("fadeOut");
-        yield return new WaitForSeconds(waitTime);
-        SceneManager.LoadScene("SampleScene");
+        levelToLoad = levelIndex;
+        animator.SetTrigger("FadeOut");
+    }
+
+    public void OnFadeComplete()
+    {
+        SceneManager.LoadScene(levelToLoad);
     }
 }
